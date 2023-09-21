@@ -32,7 +32,7 @@ Documentation
 -------------
 The functionality of this library is accessed via a single function: `open_iterable()`.
 
-`open_iterable()` is designed to work the same was as the builtin `open()`, except that it takes an
+`open_iterable()` is designed to work the same way as the builtin `open()`, except that it takes an
 iterable to "open" instead of a file. For example, it can open the iterable in binary or text mode,
 has options for buffering, encoding, etc. See the docstring of `open_iterable` for more detailed
 documentation.
