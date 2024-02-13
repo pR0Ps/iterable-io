@@ -20,6 +20,7 @@ class RawIterableReader(io.RawIOBase):
 
     def close(self):
         self._iter = None
+        self._extra = None
         super().close()
 
     def tell(self):
