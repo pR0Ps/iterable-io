@@ -19,8 +19,7 @@ jobs:
           - macos-latest
           - windows-latest
         python-version:
-          - "3.5"
-          - "3.6"
+          # < 3.7 not widely available on test images
           - "3.7"
           - "3.8"
           - "3.9"
@@ -29,25 +28,16 @@ jobs:
           - "3.12"
           - "3.13-dev"
         exclude:
-          # 3.5 and 3.6 no longer available on ubuntu-latest
-          - os: ubuntu-latest
-            python-version: "3.5"
-          - os: ubuntu-latest
-            python-version: "3.6"
-          # 3.5 - 3.7 no longer available on macos-latest
-          - os: macos-latest
-            python-version: "3.5"
-          - os: macos-latest
-            python-version: "3.6"
+          # 3.7 no longer available on macos-latest
           - os: macos-latest
             python-version: "3.7"
       fail-fast: false
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Python v${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
