@@ -26,7 +26,8 @@ jobs:
           - "3.10"
           - "3.11"
           - "3.12"
-          - "3.13-dev"
+          - "3.13"
+          - "3.14-dev"
         exclude:
           # 3.7 no longer available on macos-latest
           - os: macos-latest
