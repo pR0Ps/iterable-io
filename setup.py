@@ -23,7 +23,7 @@ setup(
         "Source": "https://github.com/pR0Ps/iterable-io",
         "Changelog": "https://github.com/pR0Ps/iterable-io/blob/master/CHANGELOG.md",
     },
-    license="LGPLv3",
+    license="LGPL-3.0-only",
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.5",
