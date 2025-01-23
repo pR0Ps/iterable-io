@@ -19,8 +19,7 @@ jobs:
           - macos-latest
           - windows-latest
         python-version:
-          # < 3.7 not widely available on test images
-          - "3.7"
+          # < 3.8 not widely available on test images
           - "3.8"
           - "3.9"
           - "3.10"
@@ -28,10 +27,6 @@ jobs:
           - "3.12"
           - "3.13"
           - "3.14-dev"
-        exclude:
-          # 3.7 no longer available on macos-latest
-          - os: macos-latest
-            python-version: "3.7"
       fail-fast: false
     steps:
     - name: Checkout
