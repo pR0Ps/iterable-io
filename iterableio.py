@@ -12,7 +12,7 @@ class RawIterableReader(io.RawIOBase):
 
     def __init__(self, iterable):
         self._iter = iter(iterable)
-        self._extra = bytearray()
+        self._buffer = bytearray()
         self._total = 0
 
     def readable(self):
@@ -20,13 +20,13 @@ class RawIterableReader(io.RawIOBase):
 
     def close(self):
         self._iter = None
-        self._extra = None
+        self._buffer = None
         super().close()
 
     def tell(self):
         """The total number of bytes that have been read"""
         self._checkClosed()
-        return self._total - len(self._extra)
+        return self._total - len(self._buffer)
 
     def readinto(self, b):
         """Read bytes into a pre-allocated bytes-like object b
@@ -36,7 +36,7 @@ class RawIterableReader(io.RawIOBase):
         self._checkClosed()
         num = len(b)
         if self._iter is not None:
-            while len(self._extra) < num:
+            while len(self._buffer) < num:
                 try:
                     new = next(self._iter)
                 except StopIteration:
@@ -44,13 +44,17 @@ class RawIterableReader(io.RawIOBase):
                     break
                 else:
                     self._total += len(new)
-                    self._extra += new
+                    self._buffer += new
 
-        ret, self._extra = self._extra[:num], self._extra[num:]
-
-        lret = len(ret)
-        b[:lret] = ret
-        return lret
+        num_buffered = len(self._buffer)
+        if num >= num_buffered:
+            b[:num_buffered] = self._buffer
+            self._buffer.clear()
+            return num_buffered
+        else:
+            b[:num] = memoryview(self._buffer)[:num]
+            del self._buffer[:num]
+            return num
 
 
 def open_iterable(iterable, mode="r", buffering=-1, encoding=None, errors=None, newline=None):
