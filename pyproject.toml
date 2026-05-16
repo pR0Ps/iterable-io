@@ -1,6 +1,6 @@
 [project]
 name = "iterable-io"
-version = "1.0.1"
+version = "1.0.2"
 description = "Adapt generators and other iterables to a file-like interface"
 urls.repository = "https://github.com/pR0Ps/iterable-io"
 urls.changelog = "https://github.com/pR0Ps/iterable-io/blob/master/CHANGELOG.md"
