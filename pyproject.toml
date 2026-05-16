@@ -2,8 +2,8 @@
 name = "iterable-io"
 version = "1.0.2"
 description = "Adapt generators and other iterables to a file-like interface"
-urls.repository = "https://github.com/pR0Ps/iterable-io"
-urls.changelog = "https://github.com/pR0Ps/iterable-io/blob/master/CHANGELOG.md"
+urls.Repository = "https://github.com/pR0Ps/iterable-io"
+urls.Changelog = "https://github.com/pR0Ps/iterable-io/blob/master/CHANGELOG.md"
 readme = "README.md"
 license = "LGPL-3.0-only"
 classifiers = [
@@ -34,3 +34,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/iterableio"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/"]
