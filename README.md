@@ -70,7 +70,7 @@ for line in fp:
 
 Tests
 -----
-This package contains extensive tests. To run them, install `pytest` (`pip install pytest`) and run
+This package contains tests. To run them, install `pytest` (`pip install pytest`) and run
 `py.test` in the project directory.
 
 

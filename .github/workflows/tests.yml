@@ -8,9 +8,32 @@ on:
   # Run it every month to make sure it still works
   schedule:
    - cron:  '0 0 1 * *'
+
 jobs:
   build:
+    name: Build wheel using latest stable Python 3
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.x'
+
+    - name: Build wheel
+      run: pip install build && python -m build . --wheel
+
+    - name: Upload wheel artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: wheel
+        path: dist/*.whl
+
+  test:
     name: tests
+    needs: build
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -19,7 +42,6 @@ jobs:
           - macos-latest
           - windows-latest
         python-version:
-          # < 3.8 not widely available on test images
           - "3.8"
           - "3.9"
           - "3.10"
@@ -31,17 +53,25 @@ jobs:
       fail-fast: false
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Set up Python v${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install package and test dependencies
-      run: |
-        pip install -e . pytest pytest-cov
+    # install from the built wheel
+    - name: Download wheel artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: wheel
+        path: dist
 
-    - name: Run tests
+    - name: Install from wheel
       run: |
+        pip install --no-index --find-links dist iterable-io
+
+    - name: Install pytest and run tests
+      run: |
+        pip install pytest pytest-cov
         py.test --cov=iterableio
