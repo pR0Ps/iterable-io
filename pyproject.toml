@@ -36,4 +36,4 @@ build-backend = "hatchling.build"
 packages = ["src/iterableio"]
 
 [tool.hatch.build.targets.sdist]
-packages = ["src/"]
+include = ["src/", "tests/"]
